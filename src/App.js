@@ -4,6 +4,10 @@ import MovieList from './MovieList/MovieList';
 import Filter from './Filter/Filter';
 import { useState } from 'react';
 import AddMovie from './AddMovie/AddMovie';
+import { Route, Routes } from 'react-router-dom';
+import MovieDetails from './MovieDetails/MovieDetails';
+import Trailer from "./Trailer/Trailer";
+
 
 function App() {
   const [movies, setMovies] = useState([
@@ -47,12 +51,16 @@ function App() {
 
   return (
     <div className="App">
+     <h1> WELCOME TO MY MOVIEAPP</h1> 
       <Filter 
         titleFilter={titleFilter} 
         rateFilter={rateFilter} 
         onTitleFilterChange={handleTitleFilterChange} 
         onRateFilterChange={handleRateFilterChange} 
       />
+      
+      
+
       <MovieList 
         movies={movies} 
         titleFilter={titleFilter} 
@@ -65,9 +73,36 @@ function App() {
             posterURL={movie.posterURL} 
             rating={movie.rating} 
            />
+          
         )}
       />
+      
        <AddMovie  onNewMovie={addMovie} />
+        
+       <Routes>
+        <Route path='/movie' element = {<MovieCard/>}> 
+        </Route>
+
+        
+        
+        <Route path="/movies/:id" component={<MovieDetails/>} > 
+        </Route>
+
+        {/* <Route
+        exact
+        path="/movies/:id"
+        render={(props) => <MovieDetails {...props} movies={movies} />}
+      /> */}
+
+
+        <Route
+         path='/movies/:id/trailer' component={<Trailer/>}>
+        </Route>
+       
+        <Route path='*' element = {<div>NOT FOUND</div>}> 
+        </Route>
+        
+       </Routes>
     </div>
   );
 }
